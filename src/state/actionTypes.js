@@ -1,0 +1,1 @@
+export const SET_DOGGOS = 'SET_DOGGOS';
