@@ -32,19 +32,15 @@ function App() {
 			if (doggoIndex !== 0) {
 				currDoggoColumn++;
 			}
-			//console.log('created new column', finalColumns)
 		}
-		//console.log('adding new imgs to', finalColumns[currDoggoColumn])
 		finalColumns[currDoggoColumn] = finalColumns[currDoggoColumn].concat(doggoImg);
 		return finalColumns;
 	}, []) : [];
-
-	console.log("\n\n\n\n\nFinal:", doggoColumns);
 	return (
 		<div className="doggos">
 			{
-				doggoColumns.map(column => (
-					<div className="column">
+				doggoColumns.map((column, i) => (
+					<div key={i} className="column">
 						{
 							column.map(img => img)
 						}
