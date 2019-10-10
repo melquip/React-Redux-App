@@ -1,5 +1,6 @@
 import * as types from './actionTypes';
-export const doggoReducer = (state, action) => {
+const initialDoggos = [];
+export const doggosReducer = (state = initialDoggos, action) => {
 	switch(action.type) {
 		case types.SET_DOGGOS:
 			return action.payload;

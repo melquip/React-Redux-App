@@ -2,11 +2,29 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import { Provider } from 'react-redux';
+import { combineReducers, createStore } from 'redux';
+import * as reducers from './state/reducers';
+import throttle from 'lodash/throttle';
+import * as storage from './helpers/useLocalStorage';
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+const store = createStore(
+	combineReducers({
+		doggos: reducers.doggosReducer
+	}),
+	storage.loadState('doggos'),
+	window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+)
+
+store.subscribe(throttle(() => {
+	storage.saveState(store.getState(), 'doggos')
+}, 1000));
+
+
+ReactDOM.render(
+	<Provider store={store}>
+		<App />
+	</Provider>,
+	document.getElementById('root'));
+
