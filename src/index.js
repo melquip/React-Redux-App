@@ -10,11 +10,13 @@ import * as storage from './helpers/useLocalStorage';
 import thunk from 'redux-thunk';
 import throttle from 'lodash/throttle';
 
+const persistedStateKeysInLocalStorage = ['doggos', 'kittens'];
 const store = createStore(
 	combineReducers({
 		doggos: reducers.doggosReducer,
+		kittens: reducers.kittensReducer
 	}),
-	storage.loadState('doggos'),
+	storage.loadState(persistedStateKeysInLocalStorage),
 	compose(
 		applyMiddleware(thunk),
 		window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
@@ -22,7 +24,7 @@ const store = createStore(
 )
 
 store.subscribe(throttle(() => {
-	storage.saveState(store.getState(), 'doggos')
+	storage.saveState(store.getState(), persistedStateKeysInLocalStorage)
 }, 1000));
 
 
@@ -30,5 +32,6 @@ ReactDOM.render(
 	<Provider store={store}>
 		<App />
 	</Provider>,
-	document.getElementById('root'));
+	document.getElementById('root')
+);
 
