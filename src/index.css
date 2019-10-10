@@ -5,6 +5,7 @@
 * {
 	box-sizing: border-box;
 }
+
 html,
 body,
 div,
@@ -147,12 +148,14 @@ table {
 	flex-basis: calc(20% - 2px);
 	max-width: calc(20% - 2px);
 }
+
 .dog {
 	width: 100%;
 	max-width: 100%;
 	object-fit: cover;
 	padding: 5px;
 }
+
 .dog.hidden {
 	display: none;
 }
